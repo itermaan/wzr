@@ -84,7 +84,12 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 				other_cars[frame.iID] = ob;		
 				//fprintf(f, "zarejestrowano %d obcy obiekt o ID = %d\n", iLiczbaCudzychOb - 1, CudzeObiekty[iLiczbaCudzychOb]->iID);
 			}
-			other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
+			else if (frame.state.alive == false) {
+				delete other_cars[frame.iID];
+			}
+			else {
+				other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
+			}
 			
 		}	
 		//Release the Critical section
@@ -157,6 +162,12 @@ void VirtualWorldCycle()
 // ****    poza grafik¹ 
 void EndOfInteraction()
 {
+	// WYŒLIJ RAMKE INFORMUJ¥C¥ O ZAKOÑCZENIU PO£¥CZENIA
+	Frame frame;
+	frame.state = my_car->State(); 
+	frame.iID = my_car->iID;
+
+	multi_send->send((char*)&frame, sizeof(Frame));
 	fprintf(f, "Koniec interakcji\n");
 	fclose(f);
 }
