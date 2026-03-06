@@ -153,7 +153,7 @@ void VirtualWorldCycle()
 	Frame frame;
 	frame.state = my_car->State();               // state w³asnego obiektu 
 	frame.iID = my_car->iID;
-
+	frame.state.alive = true;
 	multi_send->send((char*)&frame, sizeof(Frame));  // wys³anie komunikatu do pozosta³ych aplikacji
 }
 
