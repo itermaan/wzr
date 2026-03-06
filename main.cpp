@@ -81,6 +81,7 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 			{
 				MovableObject *ob = new MovableObject();
 				ob->iID = frame.iID;
+				ob->state.alive = true;
 				other_cars[frame.iID] = ob;		
 				//fprintf(f, "zarejestrowano %d obcy obiekt o ID = %d\n", iLiczbaCudzychOb - 1, CudzeObiekty[iLiczbaCudzychOb]->iID);
 			}
