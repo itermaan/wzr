@@ -81,17 +81,15 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 			{
 				MovableObject *ob = new MovableObject();
 				ob->iID = frame.iID;
-				ob->state.alive = true;
-				other_cars[frame.iID] = ob;		
-				other_cars[frame.iID]->ChangeState(state);
+				other_cars[frame.iID] = ob;
+				other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
 				//fprintf(f, "zarejestrowano %d obcy obiekt o ID = %d\n", iLiczbaCudzychOb - 1, CudzeObiekty[iLiczbaCudzychOb]->iID);
 			}
-			else if (frame.state.alive == false) {
+			if (other_cars[frame.iID]->state.alive == false) {
 				delete other_cars[frame.iID];
 			}
-			 // aktualizacja stateu obiektu obcego 	
 			else {
-				other_cars[frame.iID]->ChangeState(state);
+				other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
 			}
 			
 		}	
@@ -113,8 +111,8 @@ void InteractionInitialisation()
 	time_of_cycle = clock();             // pomiar aktualnego czasu
 
 	// obiekty sieciowe typu multicast (z podaniem adresu WZR oraz numeru portu)
-	multi_reciv = new multicast_net("224.12.12.131", 10001);      // obiekt do odbioru ramek sieciowych
-	multi_send = new multicast_net("224.12.12.131", 10001);       // obiekt do wysy³ania ramek
+	multi_reciv = new multicast_net("224.12.12.125", 10001);      // obiekt do odbioru ramek sieciowych
+	multi_send = new multicast_net("224.12.12.125", 10001);       // obiekt do wysy³ania ramek
 
 
 	// uruchomienie w¹tku obs³uguj¹cego odbiór komunikatów:
@@ -156,7 +154,7 @@ void VirtualWorldCycle()
 	Frame frame;
 	frame.state = my_car->State();               // state w³asnego obiektu 
 	frame.iID = my_car->iID;
-	frame.state.alive = true;
+
 	multi_send->send((char*)&frame, sizeof(Frame));  // wys³anie komunikatu do pozosta³ych aplikacji
 }
 
@@ -165,12 +163,10 @@ void VirtualWorldCycle()
 // ****    poza grafik¹ 
 void EndOfInteraction()
 {
-	// WYŒLIJ RAMKE INFORMUJ¥C¥ O ZAKOÑCZENIU PO£¥CZENIA
 	Frame frame;
-	frame.state = my_car->State(); 
+	frame.state = my_car->State();               // state w³asnego obiektu 
 	frame.iID = my_car->iID;
 	frame.state.alive = false;
-	multi_send->send((char*)&frame, sizeof(Frame));
 	fprintf(f, "Koniec interakcji\n");
 	fclose(f);
 }

@@ -47,6 +47,7 @@ MovableObject::MovableObject()             // konstruktor
 	state.vPos.z = -300;
 	quaternion qObr = AsixToQuat(Vector3(0, 1, 0), 1.1*PI / 180.0); // obrót obiektu o k¹t 30 stopni wzglêdem osi y:
 	state.qOrient = qObr*state.qOrient;
+	state.alive = true;
 }
 
 MovableObject::~MovableObject()            // destruktor
