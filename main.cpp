@@ -166,6 +166,7 @@ void EndOfInteraction()
 	Frame frame;
 	frame.state = my_car->State(); 
 	frame.iID = my_car->iID;
+	frame.state.alive = false;
 
 	multi_send->send((char*)&frame, sizeof(Frame));
 	fprintf(f, "Koniec interakcji\n");
