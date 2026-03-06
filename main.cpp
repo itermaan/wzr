@@ -83,12 +83,16 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 				ob->iID = frame.iID;
 				ob->state.alive = true;
 				other_cars[frame.iID] = ob;		
+				other_cars[frame.iID]->ChangeState(state);
 				//fprintf(f, "zarejestrowano %d obcy obiekt o ID = %d\n", iLiczbaCudzychOb - 1, CudzeObiekty[iLiczbaCudzychOb]->iID);
 			}
 			else if (frame.state.alive == false) {
 				delete other_cars[frame.iID];
 			}
-			other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
+			 // aktualizacja stateu obiektu obcego 	
+			else {
+				other_cars[frame.iID]->ChangeState(state);
+			}
 			
 		}	
 		//Release the Critical section

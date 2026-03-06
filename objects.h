@@ -11,7 +11,6 @@ struct ObjectState
 	Vector3 vV_ang, vA_ang;   // predkosc i przyspieszenie liniowe
 	float steering_angle;               // kat skretu kol w radianach (w lewo - dodatni)
 	bool alive;
-	float time_since_last_frame;
 };
 
 // Klasa opisuj¹ca obiekty ruchome
