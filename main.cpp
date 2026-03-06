@@ -85,7 +85,7 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 				other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
 				//fprintf(f, "zarejestrowano %d obcy obiekt o ID = %d\n", iLiczbaCudzychOb - 1, CudzeObiekty[iLiczbaCudzychOb]->iID);
 			}
-			if (other_cars[frame.iID]->state.alive == false) {
+			if (frame.state.alive == false) {
 				delete other_cars[frame.iID];
 			}
 			else {
@@ -111,8 +111,8 @@ void InteractionInitialisation()
 	time_of_cycle = clock();             // pomiar aktualnego czasu
 
 	// obiekty sieciowe typu multicast (z podaniem adresu WZR oraz numeru portu)
-	multi_reciv = new multicast_net("224.12.12.125", 10001);      // obiekt do odbioru ramek sieciowych
-	multi_send = new multicast_net("224.12.12.125", 10001);       // obiekt do wysy³ania ramek
+	multi_reciv = new multicast_net("224.12.12.131", 10001);      // obiekt do odbioru ramek sieciowych
+	multi_send = new multicast_net("224.12.12.131", 10001);       // obiekt do wysy³ania ramek
 
 
 	// uruchomienie w¹tku obs³uguj¹cego odbiór komunikatów:
