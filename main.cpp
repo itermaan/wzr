@@ -88,9 +88,7 @@ DWORD WINAPI ReceiveThreadFun(void *ptr)
 			else if (frame.state.alive == false) {
 				delete other_cars[frame.iID];
 			}
-			else {
-				other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
-			}
+			other_cars[frame.iID]->ChangeState(state);   // aktualizacja stateu obiektu obcego 	
 			
 		}	
 		//Release the Critical section
@@ -168,7 +166,6 @@ void EndOfInteraction()
 	frame.state = my_car->State(); 
 	frame.iID = my_car->iID;
 	frame.state.alive = false;
-
 	multi_send->send((char*)&frame, sizeof(Frame));
 	fprintf(f, "Koniec interakcji\n");
 	fclose(f);
